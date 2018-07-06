@@ -1,0 +1,61 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h3>{{ title.upper() }}</h3>
+    <div>
+        {% if form.validate_on_submit() %}
+            <table>
+                <tr>
+                    <th>Mo</th>
+                    <th>Tu</th>
+                    <th>We</th>
+                    <th>Th</th>
+                    <th>Fr</th>
+                    <th>Sa</th>
+                    <th>Su</th>
+                </tr>
+                {% for row in range(1, num_rows + 1) %}
+                    <tr>
+                        {% if row == 1 %}
+                            {% for cell in range(1, day_of_week) %}
+                                <td></td>
+                            {% endfor %}
+
+                            {% for cell in range(day_of_week, 8) %}
+                                <td>{{ cell + 1 - day_of_week }}</td>
+                            {% endfor %}
+                        {% else %}
+                            {% for cell in range(1, 8) %}
+                                {% if (row - 1) * 7 + cell - day_of_week < days_in_month %}
+                                    <td>{{ (row - 1) * 7 + cell + 1 - day_of_week }}</td>
+                                {% else %}
+                                    <td></td>
+                                {% endif %}
+                            {% endfor %}
+                        {% endif %}
+                    </tr>
+                {% endfor %}
+            </table>
+        {% endif %}
+
+        <form action="" method="POST" novalidate>
+            <table>
+                {{ form.hidden_tag() }}
+                <tr>
+                    {% for field in form %}
+                        {% if not field.type in ['SubmitField', 'CSRFTokenField'] %}
+                            {% if field.errors %}
+                                <td class="error-box">
+                                    {{ field(value=field.errors[0], class="error-field warning") }}
+                                </td>
+                            {% else %}
+                            <td>{{ field(placeholder=field.label.text) }}</td>
+                            {% endif %}
+                        {% endif %}
+                    {% endfor %}
+                    <td>{{ form.submit }}</td>
+                </tr>
+            </table>
+        </form>
+    </div>
+{% endblock %}

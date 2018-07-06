@@ -1,0 +1,18 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <title>{{ title }}</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Libre+Franklin">
+        <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/main.css') }}" />
+    </head>
+    <body>
+        <div id="container">
+	        <div class="image-holder">
+		        <img src="{{ url_for('static', filename='images/EnData.png') }}" />
+	        </div>
+            {% block content %}{% endblock %}
+        </div>
+    </body>
+</html>
